@@ -1,0 +1,430 @@
+<!DOCTYPE html >
+
+<!--  Website template by freewebsitetemplates.com  -->
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<title>Minimalistic Web Template</title>
+<meta charset="iso-8859-1" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+		<link href="css/ie6.css" rel="stylesheet" type="text/css" />
+	<![endif]-->
+<!--[if IE 7]>
+        <link href="css/ie7.css" rel="stylesheet" type="text/css" />  
+	<![endif]-->
+</head>
+<script>
+  //讀取cookie
+  function readCookie(name) {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+      if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+   }
+   return null;
+  }
+  //載入顯示
+  function load(){
+
+    $.ajax(
+    {
+      url:"profile.php",
+      data:{
+      "user": readCookie('user'),
+      "type": readCookie('type')
+      },
+      type:"POST",
+      
+      error:function(){
+        alert("失敗");
+      },
+      success:function(data){
+        var content = document.getElementById('content');
+        var no = document.createElement("div");
+        var user = document.createElement("div");
+        var sex = document.createElement("div");
+        var tel = document.createElement("div");
+        var email = document.createElement("div");
+        var ledar = document.createElement("div");
+        var type = document.createElement("dic");
+        var topicno = document.createElement("div");
+        var DB;
+
+        if(data != "" ){
+          DB = JSON.parse(data);
+        }
+        
+        console.log(data);
+        console.log("DB");
+
+        if(readCookie('type') == '1'){
+          
+          no.setAttribute('id','no');
+          no.setAttribute('style','color: black');
+          no.innerText = "學號：" + DB.no;
+          type.setAttribute('id','type');
+          type.setAttribute('style','color: black');
+          type.innerText = "身份：" +typef();
+          user.setAttribute('id','name');
+          user.setAttribute('style','color: black');
+          user.innerText = "姓名：" + DB.name;
+          sex.setAttribute('id','sex');
+          sex.setAttribute('style','color: black');
+          sex.innerText = "性別：" + DB.sex;
+          tel.setAttribute('id','tel');
+          tel.setAttribute('style','color: black');
+          tel.innerText = "電話：" + DB.tel;
+          email.setAttribute('id','email');
+          email.setAttribute('style','color: black');
+          email.innerText = "信箱：" + DB.email;
+          ledar.setAttribute('id','ledar');
+          ledar.setAttribute('style','color: black');
+          ledar.innerText = "leader：" + DB.leader;
+          topicno.setAttribute("disabled","disabled");
+          topicno.setAttribute('style','color: black');
+          topicno.innerText = "topicno：" + DB.topicno;
+
+          content.appendChild(no);
+          content.appendChild(type);
+          content.appendChild(user);
+          content.appendChild(sex);
+          content.appendChild(tel);
+          content.appendChild(email);
+          content.appendChild(ledar);
+          content.appendChild(topicno);
+
+        }else if(readCookie('type') == '2'){
+          no.setAttribute('id','no');
+          no.setAttribute('style','color: black');
+          no.innerText = "學號：" + DB.no;
+          type.setAttribute('id','type');
+          type.setAttribute('style','color: black');
+          type.innerText = "身份：" + typef();
+          user.setAttribute('id','name');
+          user.setAttribute('style','color: black');
+          user.innerText = "姓名：" + DB.name;
+          tel.setAttribute('id','tel');
+          tel.setAttribute('style','color: black');
+          tel.innerText = "電話：" + DB.tel;
+          email.setAttribute('id','email');
+          email.setAttribute('style','color: black');
+          email.innerText = "信箱：" + DB.email;
+
+          content.appendChild(no);
+          content.appendChild(type);
+          content.appendChild(user);
+          content.appendChild(tel);
+          content.appendChild(email);
+        }else if(readCookie('type') == '3'){
+          type.setAttribute('id','type');
+          type.setAttribute('style','color: black');
+          type.innerText = "身份：" +typef();
+
+          content.appendChild(type);
+        }else if(readCookie('type') =='guest'){
+          type.setAttribute('id','type');
+          type.setAttribute('style','color: black');
+          type.innerText = "身份：" +typef();
+
+          content.appendChild(type);
+        }
+      }   
+  });
+  }
+
+//分類function
+  function typef(){
+    if(readCookie('type')==1){
+      return "學生";        
+    }else if(readCookie('type')==2){
+      return "教師";
+    }else if(readCookie('type')==3){
+      return "admin";
+    }else if(readCookie('type')=="guest"){
+      return "guest";
+    }
+  }
+   //按下更新資料資料後
+  function reinfo(){
+    document.getElementById("content").innerText="";
+    
+    $.ajax(
+    {
+      url:"profile.php",
+      data:{
+      "user": readCookie('user'),
+      "type": readCookie('type')
+      },
+      type:"POST",
+      
+      error:function(){
+        alert("失敗");
+      },
+      success:function(data){
+        var content = document.getElementById('content');
+        var buttondiv = document.getElementById("buttondiv");
+        
+        var Ubutton = document.createElement("button");
+        var no = document.createElement("input");
+        var user = document.createElement("input");
+        var sex = document.createElement("input");
+        var tel = document.createElement("input");
+        var email = document.createElement("input");
+        var leader = document.createElement("input");
+        var topicno = document.createElement("input");
+        var nod = document.createElement("div");
+        var userd = document.createElement("div");
+        var sexd = document.createElement("div");
+        var teld = document.createElement("div");
+        var emaild = document.createElement("div");
+        var leaderd = document.createElement("div");
+        var type = document.createElement("div");
+        var topicnod = document.createElement("div");
+
+        var DB;
+
+        if(data != "" ){
+          DB = JSON.parse(data);
+        }
+
+
+        if(readCookie('type') == '1'){
+          document.getElementById("buttondiv").innerHTML="";
+          nod.setAttribute('id','nod');
+          nod.setAttribute('style','color: black');
+          nod.innerText = "學號："  
+          userd.setAttribute('id','named');
+          userd.setAttribute('style','color: black');
+          userd.innerText = "姓名：" 
+          sexd.setAttribute('id','sexd');
+          sexd.setAttribute('style','color: black');
+          sexd.innerText = "性別：" 
+          teld.setAttribute('id','teld');
+          teld.setAttribute('style','color: black');
+          teld.innerText = "電話：" 
+          emaild.setAttribute('id','emaild');
+          emaild.setAttribute('style','color: black');
+          emaild.innerText = "信箱：" 
+          leaderd.setAttribute('id','leaderd');
+          leaderd.setAttribute('style','color: black');
+          leaderd.innerText = "leader：" ;
+          topicnod.setAttribute('id','topic');
+          topicnod.setAttribute('style','color: black');
+          topicnod.innerText = "topicno：" ;
+
+
+          no.setAttribute('id','no');
+          no.setAttribute('tpye','text');
+          no.setAttribute("disabled","disabled");
+          no.setAttribute('value', DB.no);
+          no.setAttribute('style','color: black');
+          user.setAttribute('id','name');
+          user.setAttribute('tpye','text');
+          user.setAttribute('value', DB.name);
+          user.setAttribute('style','color: black');
+          sex.setAttribute('id','sex');
+          sex.setAttribute('tpye','text');
+          sex.setAttribute('value', DB.sex);
+          sex.setAttribute('style','color: black');
+          tel.setAttribute('id','tel');
+          tel.setAttribute('tpye','text');
+          tel.setAttribute('value', DB.tel);
+          tel.setAttribute('style','color: black');
+          email.setAttribute('id','email');
+          email.setAttribute('tpye','text');
+          email.setAttribute('value', DB.email);
+          email.setAttribute('style','color: black');
+          leader.setAttribute('id','leader');
+          leader.setAttribute('tpye','text');
+          leader.setAttribute('style','color: black');
+          leader.setAttribute('value',DB.leader);
+          topicno.setAttribute('id','topic');
+          topicno.setAttribute('tpye','text');
+          topicno.setAttribute("disabled","disabled"); //這段註解可以修改內容
+          topicno.setAttribute('style','color: black');
+          topicno.setAttribute('value',DB.topicno);
+
+          nod.appendChild(no);
+          userd.appendChild(user);
+          sexd.appendChild(sex);
+          teld.appendChild(tel);
+          emaild.appendChild(email);
+          leaderd.appendChild(leader);
+          topicnod.appendChild(topicno);
+
+          content.appendChild(nod);
+          content.appendChild(userd);
+          content.appendChild(sexd);
+          content.appendChild(teld);
+          content.appendChild(emaild);
+          content.appendChild(leaderd);
+          content.appendChild(topicnod);
+          
+          Ubutton.setAttribute("id","Ubutton");
+          Ubutton.setAttribute("onclick","updata()");
+          Ubutton.setAttribute("style","color:balck");
+          Ubutton.innerText = "確認更新"
+          buttondiv.appendChild(Ubutton);
+
+        }else if(readCookie('type') == '2'){
+          document.getElementById("buttondiv").innerHTML="";
+          nod.setAttribute('id','nod');
+          nod.setAttribute('style','color: black');
+          nod.innerText = "學號：";
+          userd.setAttribute('id','named');
+          userd.setAttribute('style','color: black');
+          userd.innerText = "姓名：" ;
+          teld.setAttribute('id','teld');
+          teld.setAttribute('style','color: black');
+          teld.innerText = "電話：" ;
+          emaild.setAttribute('id','emaild');
+          emaild.setAttribute('style','color: black');
+          emaild.innerText = "信箱：" ;
+
+          no.setAttribute('id','no');
+          no.setAttribute('tpye','text');
+          no.setAttribute("disabled","disabled");
+          no.setAttribute('value', DB.no);
+          no.setAttribute('style','color: black');
+          user.setAttribute('id','name');
+          user.setAttribute('tpye','text');
+          user.setAttribute('value', DB.name);
+          user.setAttribute('style','color: black');
+          tel.setAttribute('id','tel');
+          tel.setAttribute('tpye','text');
+          tel.setAttribute('value', DB.tel);
+          tel.setAttribute('style','color: black');
+          email.setAttribute('id','email');
+          email.setAttribute('tpye','text');
+          email.setAttribute('value', DB.email);
+          email.setAttribute('style','color: black');
+
+
+          nod.appendChild(no);
+          userd.appendChild(user);
+          teld.appendChild(tel);
+          emaild.appendChild(email);
+
+          content.appendChild(nod);
+          content.appendChild(userd);
+          content.appendChild(teld);
+          content.appendChild(emaild);
+
+          Ubutton.setAttribute("id","Ubutton");
+          Ubutton.setAttribute("onclick","updata()");
+          Ubutton.setAttribute("style","color:balck");
+          Ubutton.innerText = "確認更新"
+          buttondiv.appendChild(Ubutton);
+
+        }else if(readCookie('type') == '3'){
+          type.setAttribute('id','type');
+          type.setAttribute('style','color: black');
+          type.innerText = "身份：" +typef();
+
+          content.appendChild(type);
+
+          alert("該權限無法變更")
+        }else if(readCookie('type') =='guest'){
+          type.setAttribute('id','type');
+          type.setAttribute('style','color: black');
+          type.innerText = "身份：" +typef();
+
+          content.appendChild(type);
+          alert("該權限無法變更")
+        }
+
+
+        
+      }   
+  });
+  }
+
+  //更新資料庫資料
+  function updata(){
+    if(readCookie('type')==1){
+      $.ajax(
+      {
+        url:"updata.php",
+        data:{
+        "type":readCookie('type'),
+        "stno": document.getElementById("no").value,
+        "name": document.getElementById("name").value,
+        "sex": document.getElementById("sex").value,
+        "tel": document.getElementById("tel").value,
+        "email": document.getElementById("email").value,
+        "leader": document.getElementById("leader").value
+        },
+        type:"POST",
+        
+        error:function(){
+          alert("失敗");
+        },
+        success:function(data){
+          alert("修改完畢")
+          window.location.reload();
+        }
+      });
+    }else if(readCookie('type') == 2){
+      $.ajax(
+      {
+        url:"updata.php",
+        data:{
+        "type":readCookie('type'),
+        "no": document.getElementById("no").value,
+        "name": document.getElementById("name").value,
+        "tel": document.getElementById("tel").value,
+        "email": document.getElementById("email").value
+        },
+        type:"POST",
+        
+        error:function(){
+          alert("失敗");
+        },
+        success:function(data){
+          alert("更新完畢")
+          window.location.reload();
+        }
+      }
+      )}
+  }
+</script>
+
+<body onload="load()">
+<div id="background">
+  <div id="page">
+    <div class="header">
+      <div class="footer">
+        <div class="body">
+          <div id="sidebar"> <a href="index.html"><img  src="images/2.jpg" alt="" width="114" height="97" id="logo" title="" with="154"/></a>
+            <ul class="navigation">
+		          <li ><a href="index.html">首頁</a></li>
+											<li  ><a href="歷屆專題.html">歷屆專題</a></li>
+											<li><a href="師生留言板.html">師生留言板</a></li>
+				              <li class="active"><a href="個人資訊.html">個人資訊</a></li>
+				              <li><a href="管理專題.html">專題管理</a></li>
+											<li class="last" ><a href="登入.html">登入</a></li>
+				              <li class="last" ><a href="回報.html">回報</a></li>
+			      </ul>
+            <div class="footenote"> <span>&copy; Copyright &copy; 2020.</span> <span><a href="index.html">Company name</a> all rights reserved</span> </div>
+            <div>
+            </div>
+          </div>
+          <div id = text style="color: black; font-size: 20pt;">個人資訊</div>
+          <div id = content> 
+           
+          </div>
+          <div id = buttondiv>
+            <button id = "reinfo" onclick = "reinfo()" style="color: black;">修改資料</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="shadow"> </div>
+
+</div>
+</body>
+</html>

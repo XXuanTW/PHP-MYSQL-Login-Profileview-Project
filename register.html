@@ -1,0 +1,92 @@
+<!DOCTYPE html >
+<!--  Website template by freewebsitetemplates.com  -->
+<html>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Minimalistic Web Template</title>
+	<meta  charset="iso-8859-1" />
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<!--[if IE 6]>
+		<link href="css/ie6.css" rel="stylesheet" type="text/css" />
+	<![endif]-->
+	<!--[if IE 7]>
+        <link href="css/ie7.css" rel="stylesheet" type="text/css" />  
+	<![endif]-->
+</head>
+<script>
+	//送出註冊
+    function button(){
+    $.ajax(
+    {
+      url: "register.php",
+      data:{
+		"name" : document.getElementById("name").value,
+		"password": document.getElementById("password").value,
+		"password2" : document.getElementById("password2").value,
+		"admin-select" : document.getElementById("admin-select").value
+      },
+
+      type:"POST",
+      
+      error:function(){
+        alert("失敗");
+      },
+      success:function(data){
+        alert(data);//跳出訊息
+      }   
+  });
+    }
+</script>
+<body>
+
+	  <div id="background">
+			  <div id="page">
+			  
+					 <div class="header">
+						<div class="footer">
+							<div class="body">
+									<div id="sidebar">
+									    <a href="index.html"><img  src="images/2.jpg" alt="" width="114" height="97" id="logo" title="" with="154"/></a>
+										
+										<ul class="navigation">
+									      <li ><a href="index.html">首頁</a></li>
+										  <li  ><a href="歷屆專題.html">歷屆專題</a></li>
+										  <li ><a href="師生留言板.html">師生留言板</a></li>
+											<li><a href="個人資訊.html">個人資訊</a></li>
+											<li><a href="管理專題.html">專題管理</a></li>
+										  <li class="active last" ><a href="登入.html">登入</a></li>
+											<li class="last" ><a href="回報.html">回報</a></li>
+									  </ul>
+										
+									  <div class="connect"></div>
+										<div class="footenote">
+										  <span>&copy; Copyright &copy; 2020.</span>
+										  <span><a href="index.html">Company name</a> all rights reserved</span>
+										</div>
+										
+									</div>
+									<div id = "content">
+											<p style="color: black;">使用者名稱：<input type=text id="name"></p>
+											<p style="color: black;">密　　　碼：<input type=password id="password"></p>
+                                            <p style="color: black;">確認　密碼：<input type=password id="password2"></p>
+                                            <p style="color: black;">身　　　份：
+                                            <select id = "admin-select">
+                                                <option value="1">student</option>
+                                                <option value="2">teacher</option>
+                                                <option value="3">admin</option>
+                                            </select></p>
+                                            <button id="submit"  onclick="button()">確認</button>
+										</form>
+									</div>
+							</div>
+						</div>
+					 </div>
+					 <div class="shadow">
+					 </div>
+			  </div>    
+	  </div>    
+	
+</body>
+</html>
